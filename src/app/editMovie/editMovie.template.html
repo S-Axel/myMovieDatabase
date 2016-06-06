@@ -1,0 +1,56 @@
+<div class="loading" ng-show="loading">
+  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+</div>
+
+<form ng-hide="loading" name="editMovieForm" ng-submit="saveMovie()">
+  <div class="form-group">
+    <label for="name">Titre</label>
+    <input required type="text" class="form-control" id="name" placeholder="titre" ng-model="movie.name">
+  </div>
+
+  <div class="form-group">
+    <label for="director">Réalisateur</label>
+    <input required type="text" class="form-control" id="director" placeholder="réalisateur" ng-model="movie.director">
+  </div>
+
+  <div class="form-group">
+    <label for="posterUpload">Affiche</label>
+    <img class="poster-image-m" id="posterImage" ng-src="{{movie.poster}}">
+    <input type="file" accept="image/*" id="posterUpload">
+  </div>
+
+  <div class="form-group">
+    <label>Acteurs</label>
+    <ul>
+      <li ng-repeat="actor in movie.actors track by $index">
+        <input required type="text" placeholder="acteur" ng-model="movie.actors[$index]">
+        <button class="btn-xs btn-danger" ng-click="deleteActor(actor)">
+          <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+      </li>
+      <button class="btn-xs btn-success"
+              ng-if="canAddActor()"
+              ng-click="addActor()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </button>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label for="release">Date de sortie</label>
+    <input required type="date" class="form-control" id="release" ng-model="releaseDate">
+  </div>
+
+  <div class="form-group">
+    <label for="ratingSelector">Note</label>
+    <select required
+            id="ratingSelector"
+            name="ratingSelector"
+            ng-options="rating.label for rating in ratingsData track by rating.value"
+            ng-model="rating">
+    </select>
+  </div>
+
+  <button ng-click="back()" class="btn btn-default">retour</button>
+  <button type="submit" ng-disabled="createMovieForm.$invalid" class="btn btn-default">sauvegarder</button>
+</form>

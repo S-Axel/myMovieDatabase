@@ -1,0 +1,35 @@
+<h1>liste des films</h1>
+<div class="loading" ng-if="loading">
+  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+</div>
+<div ng-if="!loading">
+  <ul class="list-group">
+    <li class="list-group-item row" ng-repeat="currentMovie in movies">
+      <div class="col-md-3">
+        <img class="poster-image-s" ng-src="{{currentMovie.poster}}">
+      </div>
+      <div class="col-md-6">
+        <h3 class="">{{currentMovie.name}}</h3>
+        <span class=""> Réalisateur : </span>
+        <span>{{currentMovie.director}}</span>
+        <br>
+        <span class=""> Date de sortie : {{currentMovie.release}}</span>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-success " ng-click="modifyMovie(currentMovie)">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+        <br>
+        <button class="btn btn-info" ng-click="detailMovie(currentMovie)">
+          <i class="fa fa-info" aria-hidden="true"></i>
+        </button>
+        <br>
+        <button class="btn btn-danger" ng-click="deleteMovie(currentMovie)">
+          <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+      </div>
+    </li>
+  </ul>
+  <button class="btn btn-default" ng-click="createMovie()">Nouveau</button>
+</div>
+
