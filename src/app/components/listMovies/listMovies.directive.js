@@ -5,6 +5,7 @@ angular.module('myMovieDatabase01')
     return {
       templateUrl: 'app/components/listMovies/listMovies.template.html',
       restrict: 'E',
+      transclude: true,
       scope: {},
       controller: function ($scope, $location, moviesFactory) {
         $scope.loading = true;
