@@ -8,7 +8,7 @@ angular.module('myMovieDatabase01')
     }
 
     function dateToDatabase(uiDate) {
-      return uiDate.toDateString();
+      return uiDate.toLocaleDateString();
     }
 
     function actorsToDatabase(actors) {
