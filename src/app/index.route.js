@@ -8,44 +8,24 @@
   function routeConfig($routeProvider) {
     $routeProvider
       .when('/list', {
-        templateUrl: 'app/movieList/movieList.html',
+        templateUrl: 'app/listMovies/listMovies.html',
         controller: 'ListCtrl',
-        controllerAs: 'List',
-        resolve: {
-          'currentAuth': ['firebaseFactory', function (fbFactory) {
-            return fbFactory.requireAuth();
-          }]
-        }
+        controllerAs: 'List'
       })
       .when('/details/:id', {
         templateUrl: 'app/detailMovie/detailMovie.html',
         controller: 'DetailsCtrl',
-        controllerAs: 'Details',
-        resolve: {
-          'currentAuth': ['firebaseFactory', function (fbFactory) {
-            return fbFactory.requireAuth();
-          }]
-        }
+        controllerAs: 'Details'
       })
       .when('/edit/:id', {
         templateUrl: 'app/editMovie/editMovie.html',
         controller: 'EditCtrl',
-        controllerAs: 'Edit',
-        resolve: {
-          'currentAuth': ['firebaseFactory', function (fbFactory) {
-            return fbFactory.requireAuth();
-          }]
-        }
+        controllerAs: 'Edit'
       })
       .when('/create', {
         templateUrl: 'app/createMovie/createMovie.html',
         controller: 'CreateCtrl',
-        controllerAs: 'Create',
-        resolve: {
-          'currentAuth': ['firebaseFactory', function (fbFactory) {
-            return fbFactory.requireAuth();
-          }]
-        }
+        controllerAs: 'Create'
       })
       .when('/login', {
         templateUrl: 'app/login/login.html',

@@ -1,23 +1,15 @@
 'use strict';
 
-/**
- * @ngdoc directive
- * @name newMovieDatabaseApp.directive:listDirective
- * @description
- * # listDirective
- */
 angular.module('myMovieDatabase01')
   .directive('movieList', function () {
     return {
-      templateUrl: 'app/movieList/movieList.template.html',
+      templateUrl: 'app/components/listMovies/listMovies.template.html',
       restrict: 'E',
-      scope: {
-        movies: '=',
-        dbDeleteMovie: '='
-      },
-      controller: function ($scope, $location) {
+      scope: {},
+      controller: function ($scope, $location, moviesFactory) {
         $scope.loading = true;
-        $scope.movies.$loaded().then(function () {
+        moviesFactory.getMovies().then(function (movies) {
+          $scope.movies = movies;
           $scope.loading = false;
         });
 
@@ -30,9 +22,7 @@ angular.module('myMovieDatabase01')
         $scope.createMovie = function () {
           $location.path('/create');
         };
-        $scope.deleteMovie = function(movie) {
-          $scope.dbDeleteMovie(movie);
-        };
+        $scope.deleteMovie = moviesFactory.deleteMovie;
       }
     };
   });

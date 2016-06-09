@@ -1,39 +1,31 @@
 'use strict';
 
-/**
- * @ngdoc directive
- * @name newMovieDatabaseApp.directive:editMovie
- * @description
- * # editMovie
- */
 angular.module('myMovieDatabase01')
   .directive('editMovie', function () {
     return {
-      templateUrl: 'app/editMovie/editMovie.template.html',
+      templateUrl: 'app/components/editMovie/editMovie.template.html',
       restrict: 'E',
       scope: {
-        getMovie: '=',
-        dbSaveMovie: '='
+        movieId: '='
       },
-
-
-
-
-      controller: function ($scope, $location, RATINGS) {
+      controller: function ($scope, $location, moviesFactory, RATINGS) {
         $scope.loading = true;
         $scope.movie = {
           actors: []
         };
-        $scope.getMovie.then(function (movie) {
+        $scope.ratingsData = RATINGS;
+
+        moviesFactory.getMovieById($scope.movieId).then(function (movie) {
           $scope.movie = movie;
           $scope.releaseDate = new Date($scope.movie.release);
           $scope.rating = $scope.ratingsData.filter(function(rating){
             return (rating.value === $scope.movie.rating);
           })[0];
           $scope.loading = false;
+        }).catch(function (error) {
+          console.error(error);
         });
 
-        $scope.ratingsData = RATINGS;
 
         $scope.saveMovie = function () {
           $scope.loading = true;
@@ -42,7 +34,7 @@ angular.module('myMovieDatabase01')
           $scope.movie.actors = $scope.movie.actors.filter(function (actor) {
             return actor !== '';
           });
-          $scope.dbSaveMovie($scope.movie).then(function () {
+          moviesFactory.saveMovie($scope.movie).then(function () {
             $location.path('/list');
           }).catch(function (error) {
             $scope.loading = false;
@@ -50,16 +42,10 @@ angular.module('myMovieDatabase01')
           });
         };
 
-        $scope.deleteActor = function (actor) {
-          var newActors = [];
-          var actorIndex = $scope.movie.actors.indexOf(actor);
-          console.log(actorIndex);
-          if (actorIndex) {
-            newActors = $scope.movie.actors.slice(0, actorIndex);
-          }
-          newActors = newActors.concat($scope.movie.actors.slice(actorIndex + 1, $scope.movie.actors.length));
-          $scope.movie.actors = newActors;
+        $scope.deleteActor = function (index) {
+          $scope.movie.actors.splice(index, 1);
         };
+
         $scope.canAddActor = function () {
           return !($scope.movie.actors && $scope.movie.actors !== []) ||
             ($scope.movie.actors[$scope.movie.actors.length - 1] !== '');
@@ -68,16 +54,15 @@ angular.module('myMovieDatabase01')
         $scope.addActor = function () {
           $scope.movie.actors.push('');
         };
+
         $scope.back = function () {
           $location.path('/list');
         };
       },
 
 
-
-
       link: function (scope, element) {
-        element.find('#posterUpload').on('cjhange', function (posterUpload) {
+        element.find('#posterUpload').on('change', function (posterUpload) {
           var file = posterUpload.target.files[0];
           var fileReader = new FileReader();
           fileReader.onload = function (file) {

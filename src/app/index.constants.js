@@ -4,7 +4,11 @@
 
   angular
     .module('myMovieDatabase01')
-    .constant('malarkey', malarkey)
-    .constant('moment', moment);
-
+    .constant('RATINGS', [
+      {label: 'médiocre', value: 1},
+      {label: 'mauvais', value: 2},
+      {label: 'moyen', value: 3},
+      {label: 'bon', value: 4},
+      {label: 'excellent', value: 5}])
+    .constant('SERVER_URL', 'https://axelmoviedatabase.firebaseio.com');
 })();

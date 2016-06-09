@@ -1,0 +1,32 @@
+<div class="loading" ng-show="loading">
+  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+</div>
+<div ng-hide="loading">
+  <h1>{{ movie.name }}</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <img class="poster-image-m" ng-src="{{movie.poster}}">
+    </div>
+    <div class="col-md-8">
+      Réalisateur : {{ movie.director }}
+      <br>
+      <br>
+      Acteurs :
+      <br>
+      <span ng-repeat="actor in movie.actors track by $index">
+        {{ actor }}{{ commaBtwActors($index) }}
+      </span>
+      <br>
+      <br>
+      Date de sortie : {{ movie.release | date}}
+      <br>
+      <br>
+      Note : {{ movie.rating | stars }}
+      <div>
+        <button class="btn btn-default" ng-click="back()">retour</button>
+        <button class="btn btn-default" ng-click="editMovie()">éditer</button>
+      </div>
+    </div>
+  </div>
+</div>
+

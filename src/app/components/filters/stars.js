@@ -1,14 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc filter
- * @name newMovieDatabaseApp.filter:ratings
- * @function
- * @description
- * # ratings
- * Filter in the newMovieDatabaseApp.
- */
-
 angular.module('myMovieDatabase01')
   .filter('stars', function () {
     return function (input) {

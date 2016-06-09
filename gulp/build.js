@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var babel = require('gulp-babel');
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -43,6 +44,9 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe($.useref())
     .pipe(jsFilter)
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe($.replace('../../bower_components/font-awesome/fonts', '../fonts'))
     .pipe($.sourcemaps.init())
     .pipe($.ngAnnotate())

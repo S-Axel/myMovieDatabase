@@ -1,20 +1,20 @@
 'use strict';
 
-/**
- * @ngdoc directive
- * @name newMovieDatabaseApp.directive:detailMovie
- * @description
- * # detailMovie
- */
 angular.module('myMovieDatabase01')
   .directive('detailMovie', function () {
     return {
-      templateUrl: 'app/detailMovie/detailMovie.template.html',
+      templateUrl: 'app/components/detailMovie/detailMovie.template.html',
       restrict: 'E',
-      scope: {
-        movie: '='
-      },
-      controller: function ($scope, $location) {
+       scope: {
+         movieId: '='
+       },
+      controller: function ($scope, $location, moviesFactory) {
+        $scope.loading = true;
+        moviesFactory.getMovieById($scope.movieId).then(function (movie) {
+          $scope.movie = movie;
+          $scope.loading = false;
+        });
+
         $scope.editMovie = function () {
           $location.path('edit/' + $scope.movie.$id);
         };

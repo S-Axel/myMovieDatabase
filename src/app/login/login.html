@@ -1,1 +1,12 @@
-<login class="col-md-4 col-md-offset-4"></login>
+<form name="loginForm" class="col-md-4 col-md-offset-4" ng-submit="connect(user.email, user.password)">
+  <div class="form-group">
+    <label>Adresse mail</label>
+    <input required type="email" class="form-control" placeholder="Email" ng-model="user.email">
+  </div>
+  <div class="form-group">
+    <label>Mot de passe</label>
+    <input required type="password" class="form-control" placeholder="Mot de passe" ng-model="user.password">
+  </div>
+  <h4 class="text-danger" ng-show="error">{{error}}</h4>
+  <button ng-required="loginForm.$invalid" type="submit" class="btn btn-primary">Se connecter</button>
+</form>
