@@ -9,9 +9,9 @@ angular.module('myMovieDatabase01')
       controller: function ($scope, $location, moviesFactory, RATINGS) {
         $scope.loading = false;
         $scope.ratingsData = RATINGS;
-        /*$scope.movie = {
+        $scope.movie = {
           actors: []
-        };*/
+        };
         $scope.releaseDate = new Date();
 
         $scope.createMovie = function () {
@@ -49,7 +49,6 @@ angular.module('myMovieDatabase01')
             element.find('#posterImage').attr('src', scope.movie.poster);
           };
           if (file) {
-            console.log('readasdataurl');
             fileReader.readAsDataURL(file);
           }
         });
