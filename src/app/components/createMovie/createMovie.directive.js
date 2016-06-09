@@ -6,7 +6,7 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/createMovie/createMovie.template.html',
       restrict: 'E',
       scope: {},
-      controller: function ($scope, $location, moviesFactory, RATINGS) {
+      controller: function ($scope, $location, moviesFactory, dateConvert, RATINGS) {
         $scope.loading = false;
         $scope.ratingsData = RATINGS;
         $scope.movie = {
@@ -17,7 +17,7 @@ angular.module('myMovieDatabase01')
         $scope.createMovie = function () {
           $scope.loading = true;
           $scope.movie.rating = $scope.rating.value;
-          $scope.movie.release = $scope.releaseDate.toDateString();
+          $scope.movie.release = dateConvert.toDatabase($scope.releaseDate);
           moviesFactory.createMovie($scope.movie).then(function () {
             $location.path('/list');
           }).catch(function (error) {
@@ -25,9 +25,12 @@ angular.module('myMovieDatabase01')
             console.error(error);
           });
         };
+
         $scope.deleteActor = function (index) {
           $scope.movie.actors.splice(index, 1);
         };
+
+        //allow to add a new actor only if the actors array is empty or if the last actor is not an empty string
         $scope.canAddActor = function () {
           return !($scope.movie.actors && $scope.movie.actors !== []) ||
             ($scope.movie.actors[$scope.movie.actors.length - 1] !== '');
@@ -36,6 +39,7 @@ angular.module('myMovieDatabase01')
         $scope.addActor = function () {
           $scope.movie.actors.push('');
         };
+        
         $scope.back = function () {
           $location.path('/list');
         };

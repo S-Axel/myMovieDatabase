@@ -8,7 +8,7 @@ angular.module('myMovieDatabase01')
       scope: {
         movieId: '='
       },
-      controller: function ($scope, $location, moviesFactory, RATINGS) {
+      controller: function ($scope, $location, moviesFactory, dateConvert, RATINGS) {
         $scope.loading = true;
         $scope.movie = {
           actors: []
@@ -17,7 +17,7 @@ angular.module('myMovieDatabase01')
 
         moviesFactory.getMovieById($scope.movieId).then(function (movie) {
           $scope.movie = movie;
-          $scope.releaseDate = new Date($scope.movie.release);
+          $scope.releaseDate = dateConvert.toUi($scope.movie.release);
           $scope.rating = $scope.ratingsData.filter(function(rating){
             return (rating.value === $scope.movie.rating);
           })[0];
@@ -30,7 +30,7 @@ angular.module('myMovieDatabase01')
         $scope.saveMovie = function () {
           $scope.loading = true;
           $scope.movie.rating = $scope.rating.value;
-          $scope.movie.release = $scope.releaseDate.toDateString();
+          $scope.movie.release = dateConvert.toDatabase($scope.releaseDate);
           $scope.movie.actors = $scope.movie.actors.filter(function (actor) {
             return actor !== '';
           });
@@ -45,7 +45,8 @@ angular.module('myMovieDatabase01')
         $scope.deleteActor = function (index) {
           $scope.movie.actors.splice(index, 1);
         };
-
+        
+        //allow to add a new actor only if the actors array is empty or if the last actor is not an empty string
         $scope.canAddActor = function () {
           return !($scope.movie.actors && $scope.movie.actors !== []) ||
             ($scope.movie.actors[$scope.movie.actors.length - 1] !== '');
