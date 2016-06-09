@@ -23,7 +23,7 @@
     <label>Acteurs</label>
     <ul>
       <li ng-repeat="actor in movie.actors track by $index">
-        <input required type="text" placeholder="acteur" ng-model="movie.actors[$index]">
+        <input type="text" placeholder="acteur" ng-model="movie.actors[$index]">
         <button class="btn-xs btn-danger" ng-click="deleteActor($index)"><i class="fa fa-minus" aria-hidden="true"></i></button>
       </li>
       <button class="btn-xs btn-success"

@@ -8,7 +8,7 @@ angular.module('myMovieDatabase01')
       scope: {
         movieId: '='
       },
-      controller: function ($scope, $location, moviesFactory, dateConvert, RATINGS) {
+      controller: function ($scope, $location, moviesFactory, movieConvert, RATINGS) {
         $scope.loading = true;
         $scope.movie = {
           actors: []
@@ -17,10 +17,8 @@ angular.module('myMovieDatabase01')
 
         moviesFactory.getMovieById($scope.movieId).then(function (movie) {
           $scope.movie = movie;
-          $scope.releaseDate = dateConvert.toUi($scope.movie.release);
-          $scope.rating = $scope.ratingsData.filter(function(rating){
-            return (rating.value === $scope.movie.rating);
-          })[0];
+          $scope.releaseDate = movieConvert.dateToUi($scope.movie.release);
+          $scope.rating = movieConvert.ratingToUi($scope.movie.rating);
           $scope.loading = false;
         }).catch(function (error) {
           console.error(error);
@@ -30,10 +28,8 @@ angular.module('myMovieDatabase01')
         $scope.saveMovie = function () {
           $scope.loading = true;
           $scope.movie.rating = $scope.rating.value;
-          $scope.movie.release = dateConvert.toDatabase($scope.releaseDate);
-          $scope.movie.actors = $scope.movie.actors.filter(function (actor) {
-            return actor !== '';
-          });
+          $scope.movie.release = movieConvert.dateToDatabase($scope.releaseDate);
+          $scope.movie.actors = movieConvert.actorsToDatabase($scope.movie.actors);
           moviesFactory.saveMovie($scope.movie).then(function () {
             $location.path('/list');
           }).catch(function (error) {

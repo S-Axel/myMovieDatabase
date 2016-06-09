@@ -6,7 +6,7 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/createMovie/createMovie.template.html',
       restrict: 'E',
       scope: {},
-      controller: function ($scope, $location, moviesFactory, dateConvert, RATINGS) {
+      controller: function ($scope, $location, moviesFactory, movieConvert, RATINGS) {
         $scope.loading = false;
         $scope.ratingsData = RATINGS;
         $scope.movie = {
@@ -17,7 +17,8 @@ angular.module('myMovieDatabase01')
         $scope.createMovie = function () {
           $scope.loading = true;
           $scope.movie.rating = $scope.rating.value;
-          $scope.movie.release = dateConvert.toDatabase($scope.releaseDate);
+          $scope.movie.release = movieConvert.dateToDatabase($scope.releaseDate);
+          $scope.movie.actors = movieConvert.actorsToDatabase($scope.movie.actors);
           moviesFactory.createMovie($scope.movie).then(function () {
             $location.path('/list');
           }).catch(function (error) {
