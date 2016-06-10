@@ -6,10 +6,12 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/listMovies/listMovies.template.html',
       restrict: 'E',
       transclude: true,
-      scope: {},
+      scope: {
+        movieListPromise: '='
+      },
       controller: function ($scope, $location, moviesFactory) {
         $scope.loading = true;
-        moviesFactory.getMovies().then(function (movies) {
+        $scope.movieListPromise.then(function (movies) {
           $scope.movies = movies;
           $scope.loading = false;
         });
