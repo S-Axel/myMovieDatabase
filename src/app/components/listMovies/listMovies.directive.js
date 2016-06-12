@@ -7,15 +7,10 @@ angular.module('myMovieDatabase01')
       restrict: 'E',
       transclude: true,
       scope: {
-        movieListPromise: '='
+        movies: '='
       },
       controller: function ($scope, $location, moviesFactory) {
-        $scope.loading = true;
-        $scope.movieListPromise.then(function (movies) {
-          $scope.movies = movies;
-          $scope.loading = false;
-        });
-
+        
         $scope.modifyMovie = function (movie) {
           $location.path('/edit/' + movie.$id);
         };

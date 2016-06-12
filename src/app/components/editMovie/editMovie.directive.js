@@ -6,26 +6,13 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/editMovie/editMovie.template.html',
       restrict: 'E',
       scope: {
-        moviePromise: '='
+        movie: '='
       },
       controller: function ($scope, $location, moviesFactory, movieConvert, RATINGS) {
-        $scope.loading = true;
-        $scope.movie = {
-          actors: []
-        };
         $scope.ratingsData = RATINGS;
-
-        $scope.moviePromise.then(function (movie) {
-          $scope.movie = movie;
-          $scope.releaseDate = movieConvert.dateToUi($scope.movie.release);
-          console.log($scope.releaseDate);
-          $scope.rating = movieConvert.ratingToUi($scope.movie.rating);
-          $scope.loading = false;
-        }).catch(function (error) {
-          console.error(error);
-        });
-
-
+        $scope.releaseDate = movieConvert.dateToUi($scope.movie.release);
+        $scope.rating = movieConvert.ratingToUi($scope.movie.rating);
+        
         $scope.saveMovie = function () {
           $scope.loading = true;
           $scope.movie.rating = $scope.rating.value;

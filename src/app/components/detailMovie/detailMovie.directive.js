@@ -6,15 +6,10 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/detailMovie/detailMovie.template.html',
       restrict: 'E',
        scope: {
-         moviePromise: '='
+         movie: '='
        },
       controller: function ($scope, $location) {
-        $scope.loading = true;
-        $scope.moviePromise.then(function (movie) {
-          $scope.movie = movie;
-          $scope.loading = false;
-        });
-
+        
         $scope.editMovie = function () {
           $location.path('edit/' + $scope.movie.$id);
         };

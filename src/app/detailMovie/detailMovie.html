@@ -1,1 +1,6 @@
-<detail-movie id="movieDetails" class="col-md-5 col-md-offset-3" movie-promise="moviePromise"></detail-movie>
+<loading ng-if="loading">
+  <h1>Chargement du film en cours...</h1>
+</loading>
+
+<detail-movie ng-if="!loading" id="movieDetails" class="col-md-5 col-md-offset-3" movie="movie">
+</detail-movie>

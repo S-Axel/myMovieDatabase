@@ -1,8 +1,4 @@
-<div class="loading" ng-show="loading">
-  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-</div>
-
-<form ng-hide="loading" name="editMovieForm" ng-submit="saveMovie()">
+<form name="editMovieForm" ng-submit="saveMovie()">
   <div class="form-group">
     <label for="name">Titre</label>
     <input required type="text" class="form-control" id="name" placeholder="titre" ng-model="movie.name">
