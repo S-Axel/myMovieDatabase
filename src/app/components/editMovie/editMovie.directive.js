@@ -6,7 +6,7 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/editMovie/editMovie.template.html',
       restrict: 'E',
       scope: {
-        movieId: '='
+        moviePromise: '='
       },
       controller: function ($scope, $location, moviesFactory, movieConvert, RATINGS) {
         $scope.loading = true;
@@ -15,9 +15,10 @@ angular.module('myMovieDatabase01')
         };
         $scope.ratingsData = RATINGS;
 
-        moviesFactory.getMovieById($scope.movieId).then(function (movie) {
+        $scope.moviePromise.then(function (movie) {
           $scope.movie = movie;
           $scope.releaseDate = movieConvert.dateToUi($scope.movie.release);
+          console.log($scope.releaseDate);
           $scope.rating = movieConvert.ratingToUi($scope.movie.rating);
           $scope.loading = false;
         }).catch(function (error) {
@@ -41,7 +42,7 @@ angular.module('myMovieDatabase01')
         $scope.deleteActor = function (index) {
           $scope.movie.actors.splice(index, 1);
         };
-        
+
         //allow to add a new actor only if the actors array is empty or if the last actor is not an empty string
         $scope.canAddActor = function () {
           return !($scope.movie.actors && $scope.movie.actors !== []) ||

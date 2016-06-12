@@ -6,11 +6,11 @@ angular.module('myMovieDatabase01')
       templateUrl: 'app/components/detailMovie/detailMovie.template.html',
       restrict: 'E',
        scope: {
-         movieId: '='
+         moviePromise: '='
        },
-      controller: function ($scope, $location, moviesFactory) {
+      controller: function ($scope, $location) {
         $scope.loading = true;
-        moviesFactory.getMovieById($scope.movieId).then(function (movie) {
+        $scope.moviePromise.then(function (movie) {
           $scope.movie = movie;
           $scope.loading = false;
         });
